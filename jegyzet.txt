@@ -1,0 +1,20 @@
+rendszerszolgáltatás - rendszer által, hogy az üzleti menjen (szedjük két részre, hálózat-op rendszer)
+üzletszolgáltatás - ember által használt
+
+megjegyzés, hogy packet tracer-es eszközt használunk, de valóságban nem
+
+ok-okozati igényfelmérés
+
+üres termet felmérni, tervezésben írni, hogy mit hova kell rakni majd
+
+terv, kiviteli doksi a terv
+tesztelés külön
+
+fordított gonolkodás
+
+védelem megmagyarázása
+
+létszám megemlítése
+
+minden szolgáltatásnak legyen feladata
+
