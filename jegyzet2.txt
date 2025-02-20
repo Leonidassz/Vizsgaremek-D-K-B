@@ -1,0 +1,4 @@
+kritikus szolgáltatások
+mint pl, ha van egy szolgáltatás, akkor azt külön beleírni, pl szünetmentes táp, 0-24-es szolgáltatás, naplók átnézése, kritikus üzenetek felett kapjon üzenetet
+
+jobban szétszedni az üzleti és rendszer katalógust, pl router által, switch által, biztonsági funkció
