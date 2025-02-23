@@ -1,0 +1,4 @@
+vlan 10 -  dolgozók data
+vlan 20 - vezetőség data
+vlan 30 - management
+vlan 40 - VOICE
