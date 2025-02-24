@@ -1,42 +1,21 @@
-# Igényfelmérés
+# Felkérés
 
-Felkeresett minket a Gandiegyszálse, amely egy technikus segítséget nyújtó cég. A kérés után elmentünk a céggel diskurálni a feltételekről, igényekről, hogy képzelték el és hogy mi hogy tudnánk megvalósítani.
+Felkeresett minket a Gandiegyszálse, amely egy technikus segítséget nyújtó cég, hogy Magyarországon is szeretnének egy központot kialakítani. 
+A vállalat már vett két irodai emeletet, emellett egy üzlethelyiség is van már a nevükön, ahol az ügyfelek be tudják vinni a hibás termékeiket.
+Feladatunk ezeknek a helységeknek a teljes kitervelése, megvalósítása.
 
-## A cégnél
+A felkérés után egyeztettünk egy időpontot, hogy megtudjuk beszélni a feltételeket, kéréseket, illetve felmérni a helyet, hogy tudnánk fizikailag megvalósítani az egészet.
 
-Amint a cégnél leültünk beszélgetni az igazgatóval. 
-Közölte, hogy négy eltérő helységben működnének, ebből kettő irodai közeg, egy pedig bolti közeg, illetve a rendszergazdájuk nem minden nap jár be dolgozni, ezért egy home office-os környezet is lenne.
-A feladatunk ezeknek a helyeknek a teljes konfigurálása, megvalósítása.
+## Helyzetfelmérés
 
-A plusz feltételekért, egyéni kérésekért leültünk beszélni a vezérigazgatóval, hogy megtudjuk, milyen extra szolgáltatásokra van szükségük.
+A két irodai közeg az egyikben a vezetőség és a dolgozók egy térségben helyezkednek el, ebből kifolyólag felosztjuk az embereket a beosztásuk szerint külön csoportoba, hogy egymás forgalmát ne akadályozzák, illetve ne lássanak bele. Emellett a rendszergazdáknak és a telefonoknak is lesz külön csoportjuk. Ezt a csoportbesoztást vlan-onként fogjuk megoldani mindkettő irodai közegben.
 
-### Kérdések:
-- A vezetőség és a dolgozók hogy oszlanak el?
-- Lesz egy iroda, ahol a vezetőség és a dolgozók egy helyen vannak, a másikban csak a dolgozók lennének.
+A rendszergazdák viszont nem járnak be a hét minden napján, ezáltal ki kell nekik is alakítani egy home office környezetet, amivel hozzá tudnak férni a céges hálózathoz, illetve a legtöbb forgalomirányítón és kapcsolón telepítünk SSH-t, amivel távolról is el tudjanak érni ezeket az eszközöket és az esetleges hibajavításokat otthonról is tudják intézni.
 
-A vezetőséges irodában több vlan-t fogunk alkalmazni, hogy ne egy szálon fussanak a pornép adataival, illetve, ami a másik irodai közegben is meg lesz valósítva, hogy külön vlan-okat hozunk létre a telefonhoz és a rendszergazdának is (mivel neki mindkét irodában biztosíttunk helyet) azt itt is alkalmazni fogjuk.
+A rendszergazákkal szemben a dolgozók nem férhetnek hozzá mindenhez, nem rakhatják saját gépeiket a kapcsolókba, forgalomirányítókba, ezért biztonsági lépéseket is meg kell tennünk, mint például a portbiztonság és a nem használt portok letiltását vagy fizikailag hozzáférés ellehetetlenítése zárakkal. Viszont vannak a cégnek olyan pontjai, helyei, ahol elkerülhetetlen lesz, hogy idegen gépet kelljen felcsatlakoztatni a rendszerre, itt fizikailag elérhetőek lesznek a portok és a logikai biztonsággal fogjuk ellensúlyozni.
 
-- A rendszergazdák akkor otthontól is dolgoznának?
-- Igen, a hétnek négy napján járnának csak be.
+A cég kért egy web szolgáltatást is, hogy a meglévő és a leendő ügyfelek meg tudják őket találni interneten keresztül is. Ezt egy saját web szerverrel tervezzük megvalósítani, amelyhez egy DNS szolgáltatást is rakunk, hogy a weboldal IP címét össze tudjuk kötni egy URL-el. A web mellett a cég egy saját fájlmegosztó szolgáltatást is szeretne, szóval egy saját FTP szervert is rakunk bele, hogy a cégen belül legyen egy fájl tároló egység, ahol el tudják érni a céges adatokat.
 
-Ahhoz, hogy ez megvalósítható legyen, lehetőve kell tennünk számukra a távolról való elérést is, amit SSH-val tervezünk megvalósítani. Minden router-re és switch-re feltelepítetnénk, ezáltal otthonról is be tudnak lépni az eszközökbe.
+A vállalat 0-24-es szolgáltatást szeretne nyújtani, ennek érdekében figyelnünk kell a redundanciára, hogy esetleges fizikai kapcsolat megszakadás se állítsa le a forgalmat és akadálymentesen működjön minden továbbra is. A tervezésben közben erre figyeltünk, hogy minden közegben legyen redundancia.
 
-- Éjjel-nappali szolgáltatás lenne?
-- Igen, szeretnénk, ha folyamatos segítséget tudnánk nyújtani.
-
-Ennek érdekében az összes hálózatot redundánssá alakítunk, hogy fizikai kapcsolatmegszakadás esetén is továbbra működni tudjon minden.
-
-- Lenne-e igény saját fájlmegosztásra és weboldalra?
-- Igen.
-
-Konfigurálunk egy saját  webszervert is, ami mellé teszünk egy dns szolgáltatást is, továbbá teszünk be egy FTP szervert is a cégen belüli fájlmegosztás érdekében is.
-
-- Telefonról vagy laptopról is hozzá szeretnének férni a hálózathoz?
-- Igen, lenne olyan eset, amikor azokról kéne felmenni a rendszerre
-
-Ezért tervezünk bele vezeték nélküli hálózatot is, amit egy WLC segítségevel tudunk szabályozni és biztonságossá tenni.
-
-- A dolgozók bedughatják saját eszközeiket a kapcsolókba?
-- Nem, ezt el szeretnénk kerülni.
-
-Ebből kifolyólag az összes switch-nek kiadjuk, hogy jegyezze meg a mi általunk csatlakoztatott gépeknek a MAC címét, a többi üres portot pedig letiltjuk. Fizikai értelemben pedig veszünk a portokra zárakat, hogy még csak lehetőségük se legyen bedugni a gépeiket.
+Az egész helyen szeretnék, hogy legyen vezeték nélküli hálózat a dolgozók és főképp a rendszergazda számára, hogy tudjon csatlakozni tudjon az internethez a laptopjával vagy telefonjával. Ezt számításba véve több LAP-t is rakunk le a teljes lefedettség miatt. 
