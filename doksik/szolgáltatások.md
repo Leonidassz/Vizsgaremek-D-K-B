@@ -7,7 +7,7 @@
 |-|-|
 | DHCP | Dinamikusan oszt IP címeket a dolgozóknak és eszközöknek |
 | DHCP snooping | Mivel nem lesz miden helyen DHCP szerver, ezért a legtöbb forgalomirányítóra ki kell adni, hogy melyik utvonalon éri el a DHCP szervert |
-| OSPF | A forgalomirányatók megtaniítják egymásnak a saját útvonaljaikat |
+| OSPF | A forgalomirányatók megosztják egymással a saját általuk által ismert hálózatokat és kiszámolja a legrövidebb utakat egyes célokhoz |
 | HSRP | Redundánsá teszi a forgalomirányítókat esetleges kapcsolatmegszakadás esetén |
 | SSH | A rendszergazda számára bekonfigurált biztonságos távoli elérési módszer |
 
