@@ -1,15 +1,17 @@
 # Eszközigény
 
+*Megjegyzés, hogy élesben nem ezeket az eszközöket használnánk, mert nagyon drágák és gyártóspecifikusak nagyon, nem igazán kompatibilisek más gyártó által kifejlesztett eszközökkel, viszont a Packer Tracer-ben csak ezeket tudjuk használni.*
+
 ## Router
 
-A router választás a 2911-re jutott.
-Széles portválasztéka van, tud IPv6-os címzést és a szoftvere az egyik legkorszerűbb nagyon sok előnnyel.
+A router választás a 2811-re jutott.
+Széles portválasztéka van, tud IPv6-os címzést, és képes a voicevlan kezelésére is.
 
 ## Switch
 
 2960-24TC-S kapcsolót néztük ki.
 24 Ethernet port és 2 GigaBit ethernet elég számunkra.
-Biztosít grafikus konfigurálást is. Emelett van benne Auto SmartPorts, ami érzékeli, ha dugtak be valamit kezdetkor és felkapcsolja azt. 
+Van benne Auto SmartPorts, ami érzékeli, ha dugtak be valamit kezdetkor és felkapcsolja azt. 
 
 ## Wireless Lan Controller
 
