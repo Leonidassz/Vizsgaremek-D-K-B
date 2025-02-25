@@ -1,3 +1,12 @@
+
+/30	255.255.255.252	0.0.0.3
+/29	255.255.255.248	0.0.0.7
+/28	255.255.255.240	0.0.0.15
+/27	255.255.255.224	0.0.0.31
+/26	255.255.255.192	0.0.0.63
+/25	255.255.255.128	0.0.0.127
+/24	255.255.255.0	0.0.0.255
+
 ------------------
 G1SS1-R1
 ------------------
@@ -5,25 +14,30 @@ en
 conf t
 router ospf 1
 router-id 1.1.1.1
-network 192.168.1.0 0.0.0.63 area 0
+network 192.168.1.0 0.0.0.31 area 0
+network 192.168.1.32 0.0.0.31 area 0
+network 192.168.1.64 0.0.0.31 area 0
 network 192.168.1.96 0.0.0.15 area 0
+network 192.168.1.112 0.0.0.15 area 0
+network 192.168.1.144 0.0.0.15 area 0
+network 192.168.1.160 0.0.0.7 area 0
+network 192.168.1.168 0.0.0.3 area 0
 network 10.0.0.0 0.0.0.3 area 0
-network 10.0.0.8 0.0.0.3 area 0
+network 10.0.0.4 0.0.0.3 area 0
 passive-interface fa0/0
 passive-interface fa0/1
 auto-cost reference-bandwidth 1000
 
+------------------
 G1SS1-R2
 ------------------
 en
 conf t
 router ospf 1
 router-id 2.2.2.2
-network 192.168.1.64 0.0.0.31 area 0
-network 192.168.1.112 0.0.0.15 area 0
 network 192.168.1.128 0.0.0.15 area 0
 network 10.0.0.0 0.0.0.3 area 0
-network 10.0.0.4 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
 auto-cost reference-bandwidth 1000
 
@@ -35,12 +49,15 @@ conf t
 ip route 0.0.0.0 0.0.0.0 22.22.22.2
 router ospf 1
 router-id 3.3.3.3
-default-information originate
-network 192.168.1.0 0.0.0.63 area 0
+network 192.168.1.0 0.0.0.31 area 0
+network 192.168.1.160 0.0.0.7 area 0
+network 192.168.1.32 0.0.0.31 area 0
+network 192.168.1.144 0.0.0.15 area 0
 network 10.0.0.4 0.0.0.3 area 0
 network 10.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
 passive-interface g0/0/0
+default-information originate
 auto-cost reference-bandwidth 1000
 -----------------------
 
