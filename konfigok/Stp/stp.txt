@@ -1,0 +1,49 @@
+SW2
+
+! Rapid PVST aktiválása és gyökér beállítása
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10 root primary
+spanning-tree vlan 20 root primary
+spanning-tree vlan 30 root primary
+spanning-tree vlan 40 root primary
+
+! BPDU Guard beállítása globálisan PortFast portokra
+spanning-tree portfast bpduguard default
+spanning-tree portfast default 
+
+! Port Security beállítása access portokon
+interface range g0/1-2
+spanning-tree bpduguard enable
+exit
+
+SW3
+
+! Rapid PVST aktiválása és gyökér beállítása
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10 root secondary
+spanning-tree vlan 20 root secondary
+spanning-tree vlan 30 root secondary
+spanning-tree vlan 40 root secondary
+
+! BPDU Guard beállítása globálisan PortFast portokra
+spanning-tree portfast bpduguard default
+spanning-tree portfast default 
+
+! Port Security beállítása access portokon
+interface range g0/1-2
+spanning-tree bpduguard enable
+exit
+
+SW4
+
+! Rapid PVST aktiválása és gyökér beállítása
+spanning-tree mode rapid-pvst
+
+! BPDU Guard beállítása globálisan PortFast portokra
+spanning-tree portfast bpduguard default
+spanning-tree portfast default 
+
+! Port Security beállítása access portokon
+interface range g0/1-2
+spanning-tree bpduguard enable
+exit
