@@ -11,6 +11,7 @@ network 10.0.0.0 0.0.0.3 area 0
 network 10.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
 passive-interface fa0/1
+auto-cost reference-bandwidth 1000
 
 G1SS1-R2
 ------------------
@@ -24,6 +25,7 @@ network 192.168.1.128 0.0.0.15 area 0
 network 10.0.0.0 0.0.0.3 area 0
 network 10.0.0.4 0.0.0.3 area 0
 passive-interface fa0/0
+auto-cost reference-bandwidth 1000
 
 -----------------------
 G1SS1-R3
@@ -39,6 +41,7 @@ network 10.0.0.4 0.0.0.3 area 0
 network 10.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
 passive-interface g0/0/0
+auto-cost reference-bandwidth 1000
 -----------------------
 
 -----------------------
@@ -63,6 +66,7 @@ network 11.0.0.4 0.0.0.3 area 0
 network 192.168.2.128 0.0.0.63 area 0
 passive-interface fa0/0
 passive-interface g0/2/0
+auto-cost reference-bandwidth 1000
 
 -----------------------
 G1SS2-R2
@@ -77,6 +81,7 @@ network 11.0.0.0 0.0.0.3 area 0
 network 11.0.0.8 0.0.0.3 area 0
 passive-interface fa0/1
 passive-interface fa0/0
+auto-cost reference-bandwidth 1000
 
 ------------------------
 G1SS2-R3
@@ -89,3 +94,4 @@ network 192.168.2.0 0.0.0.127 area 0
 network 11.0.0.4 0.0.0.3 area 0
 network 11.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
+auto-cost reference-bandwidth 1000
