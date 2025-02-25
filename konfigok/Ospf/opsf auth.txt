@@ -1,0 +1,83 @@
+-------------------------
+G1SS1-R1
+-------------------------
+en
+conf t
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+
+-------------------------
+G1SS1-R2
+-------------------------
+en
+conf t
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+
+------------------------
+G1SS1-R3
+------------------------
+en
+conf t
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+
+-----------------------
+G1SS2-R1
+-----------------------
+en
+conf t
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+
+-----------------------
+G1SS2-R2
+-----------------------
+en
+conf t
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+
+----------------------
+G1SS2-R3
+----------------------
+en
+conf t
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
