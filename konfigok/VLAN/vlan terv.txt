@@ -1,3 +1,59 @@
+------------------------
+G1SS2-SW1
+------------------------
+en
+conf t
+hostname G1SS2-SW1
+vlan 10
+name Dolgozok_Data
+vlan 30
+name management
+vlan 40
+name VOICE
+vlan 50
+name wireless
+vlan 99 
+name black_hole
+exit
+
+int range fa0/23-24, fa0/21-22, fa0/18-19
+switchport mode trunk
+switchport trunk allowed vlan 10,30,40,50
+exit
+int range fa0/21-22
+channel-group 1 mode active
+exit
+int range fa0/18-19
+channel-group 2 mode active
+exit
+int fa0/1,
+switchport mode access
+switchport access vlan 10
+exit
+int range fa0/2-17
+switchport mode access
+switchport access vlan 99
+sh
+exit
+int range g0/1-2
+switchport mode access
+switchport access vlan 99
+sh
+exit
+no vlan 99
+
+int vlan 30
+ip address 192.168.1.163 255.255.255.240
+no sh
+exit
+ip default-gateway 192.168.1.161
+
+do wr
+
+
+
+
+
 vlan 10 -  dolgozók data - 
 vlan 20 - vezetőség data
 vlan 30 - management
