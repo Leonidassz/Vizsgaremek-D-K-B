@@ -183,7 +183,7 @@ name management
 vlan 99 
 name black_hole
 exit
-int range fa0/24
+int fa0/24
 switchport mode trunk
 switchport trunk allowed vlan 30
 exit
@@ -210,6 +210,66 @@ exit
 ip default-gateway 192.168.1.129
 
 do wr
+
+
+------------------------
+G1SS2-SW1
+------------------------
+
+en
+conf t
+hostname G1SS2-SW1
+vlan 10 
+name Dolgozok_Data
+vlan 30
+name management
+vlan 40
+name VOICE
+vlan 99 
+name black_hole
+exit
+int range fa0/23-24
+switchport mode trunk
+switchport trunk allowed vlan 10,30,40
+exit
+int range fa0/18-19
+switchport mode trunk
+switchport trunk allowed vlan 10,30,40
+exit
+int range fa0/1,fa0/20
+switchport mode access
+switchport access vlan 30
+exit
+int range fa0/2-17
+switchport mode access
+switchport access vlan 99
+sh
+exit
+int range g0/1-2
+switchport mode access
+switchport access vlan 99
+sh
+exit
+no vlan 99
+int range fa0/21-22
+channel-group 1 mode active
+exit
+int range fa0/18-19
+channel-group 2 mode active
+exit
+
+vtp domain-name G1SS.com
+vtp password G1SSPASS
+vtp mode server 
+
+int vlan 30
+ip address 192.168.2.132 255.255.255.240
+no sh
+exit
+ip default-gateway 192.168.1.131
+
+do wr
+
 
 
 
