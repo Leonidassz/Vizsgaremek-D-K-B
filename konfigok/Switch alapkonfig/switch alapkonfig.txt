@@ -1,0 +1,76 @@
+------------------------
+G1SS1-SW1
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+user G1SS1-SW1 password G1SS1-SW1PWD
+ip domain name G1SS
+service password-encryption
+
+------------------------
+G1SS1-SW2
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+user G1SS1-SW2 password G1SS1-SW2PWD
+ip domain name G1SS
+service password-encryption
+
+------------------------
+G1SS1-SW3
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+user G1SS1-SW3 password G1SS1-SW3PWD
+ip domain name G1SS
+service password-encryption
+
+------------------------
+G1SS2-SW1
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+user G1SS2-SW1 password G1SS2-SW1PWD
+ip domain name G1SS
+service password-encryption
+
+------------------------
+G1SS2-SW2
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+user G1SS2-SW2 password G1SS2-SW2PWD
+ip domain name G1SS
+service password-encryption
+
+------------------------
+G1SS2-SW3
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+user G1SS2-SW3 password G1SS2-SW3PWD
+ip domain name G1SS
+service password-encryption
+
+------------------------
+G1SS3-SW1
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+user G1SS3-SW1 password G1SS3-SW1PWD
+ip domain name G1SS
+service password-encryption
