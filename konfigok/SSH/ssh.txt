@@ -1,0 +1,87 @@
+G1SS1
+
+Router
+
+en
+conf t
+ip domain-name gandiegyszalse.com
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+exit
+username admin password G1ss1R
+ip ssh version 2
+
+Switch
+
+en
+conf t
+ip domain-name gandiegyszalse.com
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+exit
+username admin password G1ss1S
+ip ssh version 2
+
+
+
+G1SS2
+
+Router
+
+en
+conf t
+ip domain-name gandiegyszalse.com
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+exit
+username admin password G1ss2R
+ip ssh version 2
+
+Switch
+
+en
+conf t
+ip domain-name gandiegyszalse.com
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+exit
+username admin password G1ss2S
+ip ssh version 2
+
+
+
+G1SS3
+
+Router
+
+en
+conf t
+ip domain-name gandiegyszalse.com
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+exit
+username admin password G1ss3R
+ip ssh version 2
+
+Switch
+
+en
+conf t
+ip domain-name gandiegyszalse.com
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+exit
+username admin password G1ss3S
+ip ssh version 2
