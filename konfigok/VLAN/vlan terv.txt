@@ -1,66 +1,4 @@
 ------------------------
-G1SS2-SW1
-------------------------
-en
-conf t
-hostname G1SS2-SW1
-vlan 10
-name Dolgozok_Data
-vlan 30
-name management
-vlan 40
-name VOICE
-vlan 50
-name wireless
-vlan 99 
-name black_hole
-exit
-
-int range fa0/23-24, fa0/21-22, fa0/18-19
-switchport mode trunk
-switchport trunk allowed vlan 10,30,40,50
-exit
-int range fa0/21-22
-channel-group 1 mode active
-exit
-int range fa0/18-19
-channel-group 2 mode active
-exit
-int fa0/1,
-switchport mode access
-switchport access vlan 10
-exit
-int range fa0/2-17
-switchport mode access
-switchport access vlan 99
-sh
-exit
-int range g0/1-2
-switchport mode access
-switchport access vlan 99
-sh
-exit
-no vlan 99
-
-int vlan 30
-ip address 192.168.1.163 255.255.255.240
-no sh
-exit
-ip default-gateway 192.168.1.161
-
-do wr
-
-
-
-
-
-vlan 10 -  dolgozók data - 
-vlan 20 - vezetőség data
-vlan 30 - management
-vlan 40 - VOICE
-vlan 50 - wireless
-
-------------------------
 G1SS1-SW1
 ------------------------
 en
@@ -225,16 +163,18 @@ vlan 30
 name management
 vlan 40
 name VOICE
+vlan 50
+name wireless
 vlan 99 
 name black_hole
 exit
 int range fa0/23-24
 switchport mode trunk
-switchport trunk allowed vlan 10,30,40
+switchport trunk allowed vlan 10,30,40,50
 exit
 int range fa0/18-19
 switchport mode trunk
-switchport trunk allowed vlan 10,30,40
+switchport trunk allowed vlan 10,30,40,50
 exit
 int range fa0/1,fa0/20
 switchport mode access
@@ -258,15 +198,125 @@ int range fa0/18-19
 channel-group 2 mode active
 exit
 
-vtp domain-name G1SS.com
-vtp password G1SSPASS
 vtp mode server 
+vtp domain G1SS.com
+vtp password G1SSPASS
 
 int vlan 30
 ip address 192.168.2.132 255.255.255.240
 no sh
 exit
-ip default-gateway 192.168.1.131
+ip default-gateway 192.168.1.129
+
+do wr
+
+
+
+
+------------------------
+G1SS2-SW2
+------------------------
+
+en
+conf t
+hostname G1SS2-SW2
+
+vtp mode client
+vtp domain G1SS.com
+vtp password G1SSPASS
+
+int range fa0/21-22
+switchport mode trunk
+switchport trunk allowed vlan 10,30,40,50
+exit
+int g0/2
+switchport mode trunk
+switchport trunk allowed vlan 10,30,40,50
+exit
+int range fa0/1-5
+switchport mode access
+switchport voice vlan 40
+switchport access vlan 10
+exit
+int range fa0/6-7
+switchport mode access
+switchport access vlan 10
+exit
+int range g0/1
+switchport mode access
+switchport access vlan 50
+sh
+exit
+int range fa0/8-20,fa0/23-24
+switchport mode access
+switchport access vlan 99
+sh
+exit
+no vlan 99
+int range fa0/21-22
+channel-group 1 mode active
+exit
+
+int vlan 30
+ip address 192.168.2.133 255.255.255.240
+no sh
+exit
+ip default-gateway 192.168.1.129
+
+do wr
+
+
+
+
+------------------------
+G1SS2-SW3
+------------------------
+
+en
+conf t
+hostname G1SS2-SW3
+
+vtp mode client
+vtp domain G1SS.com
+vtp password G1SSPASS
+
+int range fa0/23-24
+switchport mode trunk
+switchport trunk allowed vlan 10,30,40,50
+exit
+int g0/2
+switchport mode trunk
+switchport trunk allowed vlan 10,30,40,50
+exit
+int range fa0/1-5
+switchport mode access
+switchport voice vlan 40
+switchport access vlan 10
+exit
+int range fa0/6-7
+switchport mode access
+switchport access vlan 10
+exit
+int range g0/1
+switchport mode access
+switchport access vlan 50
+sh
+exit
+int range fa0/8-22
+switchport mode access
+switchport access vlan 99
+sh
+exit
+no vlan 99
+int range fa0/23-24
+channel-group 1 mode active
+exit
+
+int vlan 30
+ip address 192.168.2.134 255.255.255.240
+no sh
+exit
+ip default-gateway 192.168.1.129
 
 do wr
 
@@ -307,24 +357,36 @@ int fa0/1.10
 encapsulation dot1Q 10
 ip address 192.168.1.1 255.255.255.224
 description Dolgozok_Data
+standby 1 ip 192.168.1.3
+standby 1 priority 150
+standby 1 preempt 
 exit
 int fa0/1.30
 encapsulation dot1Q 30
 ip address 192.168.1.161 255.255.255.248
 description Management
+standby 2 ip 192.168.1.163
+standby 2 priority 150
+standby 2 preempt 
 exit
 int fa0/1.40
 encapsulation dot1Q 40
 ip address 192.168.1.33 255.255.255.224
 description VOICE
+standby 3 ip 192.168.1.35
+standby 3 priority 150
+standby 3 preempt 
 exit
 int fa0/1.50
 encapsulation dot1Q 50
 ip address 192.168.1.145 255.255.255.240
 description Wireless
+standby 4 ip 192.168.1.147
+standby 4 priority 150
+standby 4 preempt 
 exit
 
-
+do wr
 
 ------------------------
 G1SS1-R2
@@ -335,6 +397,7 @@ description Management
 no sh
 exit
 
+do wr
 
 ------------------------
 G1SS1-R3
@@ -346,20 +409,239 @@ int fa0/0.10
 encapsulation dot1Q 10
 ip address 192.168.1.2 255.255.255.224
 description Dolgozok_Data
+standby 1 ip 192.168.1.3
+standby 1 priority 100 
 exit
 int fa0/0.30
 encapsulation dot1Q 30
 ip address 192.168.1.162 255.255.255.248
 description Management
+standby 2 ip 192.168.1.163
+standby 2 priority 100 
 exit
 int fa0/0.40
 encapsulation dot1Q 40
 ip address 192.168.1.34 255.255.255.224
 description VOICE
+standby 3 ip 192.168.1.35
+standby 3 priority 100 
 exit
 int fa0/0.50
 encapsulation dot1Q 50
 ip address 192.168.1.146 255.255.255.240
 description Wireless
+standby 4 ip 192.168.1.147
+standby 4 priority 100 
 exit
 
+
+------------------------
+G1SS2-R1
+------------------------
+
+int fa0/0
+ip address 192.168.2.161 255.255.255.252
+description Management
+no sh
+exit
+
+do wr
+
+
+------------------------
+G1SS2-R2
+------------------------
+
+
+
+int fa0/0
+no sh
+exit
+
+int fa0/0.10
+encapsulation dot1Q 10
+ip address 192.168.2.2 255.255.255.224
+description Dolgozok_Data
+standby 1 ip 192.168.2.1
+standby 1 priority 150
+standby 1 preempt
+exit
+
+int fa0/0.30
+encapsulation dot1Q 30
+ip address 192.168.2.130 255.255.255.240
+description Management
+standby 2 ip 192.168.2.129
+standby 2 priority 150
+standby 2 preempt
+exit
+
+int fa0/0.40
+encapsulation dot1Q 40
+ip address 192.168.2.34 255.255.255.224
+description VOICE
+standby 3 ip 192.168.2.33
+standby 3 priority 150
+standby 3 preempt
+exit
+
+int fa0/0.50
+encapsulation dot1Q 50
+ip address 192.168.2.66 255.255.255.224
+description Wireless
+standby 4 ip 192.168.2.65
+standby 4 priority 150
+standby 4 preempt
+exit
+
+int fa0/1
+no sh
+exit
+
+int fa0/1.80
+encapsulation dot1Q 80
+ip address 192.168.2.97 255.255.255.224
+description Teszt_helység
+exit
+
+int fa0/1.70
+encapsulation dot1Q 70
+ip address 192.168.2.145 255.255.255.240
+description wireless
+exit
+
+do wr
+
+
+
+------------------------
+G1SS2-R3
+------------------------
+
+
+
+int fa0/0
+no sh
+exit
+
+int fa0/0.10
+encapsulation dot1Q 10
+ip address 192.168.2.3 255.255.255.224
+description Dolgozok_Data
+standby 1 ip 192.168.2.1
+standby 1 priority 100
+
+exit
+
+int fa0/0.30
+encapsulation dot1Q 30
+ip address 192.168.2.131 255.255.255.240
+description Management
+standby 2 ip 192.168.2.129
+standby 2 priority 100
+
+exit
+
+int fa0/0.40
+encapsulation dot1Q 40
+ip address 192.168.2.35 255.255.255.224
+description VOICE
+standby 3 ip 192.168.2.33
+standby 3 priority 100
+exit
+
+int fa0/0.50
+encapsulation dot1Q 50
+ip address 192.168.2.67 255.255.255.224
+description Wireless
+standby 4 ip 192.168.2.65
+standby 4 priority 100
+exit
+
+do wr
+
+
+
+------------------------
+G1SS3-SW1
+------------------------
+en
+conf t
+hostname G1SS3-SW1
+vlan 10
+name Dolgozok_Data
+vlan 20
+name management
+vlan 30
+name VOICE
+vlan 40
+name wireless
+vlan 99 
+name black_hole
+exit
+
+int range fa0/24 
+switchport mode trunk
+switchport trunk allowed vlan 10,20,30,40
+exit
+int range fa0/1-3
+switchport mode access
+switchport voice vlan 40
+switchport access vlan 10
+exit
+int range fa0/4-6,fa0/22-23
+switchport mode access
+switchport access vlan 10
+exit
+int range fa0/7-21
+switchport mode access
+switchport access vlan 99
+sh
+exit
+no vlan 99
+
+int vlan 30
+ip address 192.168.3.26 255.255.255.252
+no sh
+exit
+ip default-gateway 192.168.3.25
+
+do wr
+
+
+
+------------------------
+G1SS3-R1
+------------------------
+
+en
+conf t
+int fa0/0
+no sh
+exit
+
+int fa0/0.10
+encapsulation dot1Q 10
+ip address 192.168.3.1 255.255.255.240
+description Dolgozok_Data
+exit
+
+int fa0/0.20
+encapsulation dot1Q 20
+ip address 192.168.3.25 255.255.255.252
+description Management
+exit
+
+int fa0/0.30
+encapsulation dot1Q 30
+ip address 192.168.3.17 255.255.255.248
+description VOICE
+exit
+
+int fa0/0.40
+encapsulation dot1Q 40
+ip address 192.168.3.29 255.255.255.252
+description Wireless
+exit
+
+do wr
