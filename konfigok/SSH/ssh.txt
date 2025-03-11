@@ -4,11 +4,12 @@ Router
 
 en
 conf t
-ip domain-name gandiegyszalse.com
+ip domain-name gandiegyszalse.net
 crypto key generate rsa
 1024
 line vty 0 15
 transport input ssh
+login local
 exit
 username admin password G1ss1R
 ip ssh version 2
@@ -17,11 +18,12 @@ Switch
 
 en
 conf t
-ip domain-name gandiegyszalse.com
+ip domain-name gandiegyszalse.net
 crypto key generate rsa
 1024
 line vty 0 15
 transport input ssh
+login local
 exit
 username admin password G1ss1S
 ip ssh version 2
@@ -34,11 +36,12 @@ Router
 
 en
 conf t
-ip domain-name gandiegyszalse.com
+ip domain-name gandiegyszalse.net
 crypto key generate rsa
 1024
 line vty 0 15
 transport input ssh
+login local
 exit
 username admin password G1ss2R
 ip ssh version 2
@@ -47,11 +50,12 @@ Switch
 
 en
 conf t
-ip domain-name gandiegyszalse.com
+ip domain-name gandiegyszalse.net
 crypto key generate rsa
 1024
 line vty 0 15
 transport input ssh
+login local
 exit
 username admin password G1ss2S
 ip ssh version 2
@@ -64,11 +68,12 @@ Router
 
 en
 conf t
-ip domain-name gandiegyszalse.com
+ip domain-name gandiegyszalse.net
 crypto key generate rsa
 1024
 line vty 0 15
 transport input ssh
+login local
 exit
 username admin password G1ss3R
 ip ssh version 2
@@ -82,6 +87,7 @@ crypto key generate rsa
 1024
 line vty 0 15
 transport input ssh
+login local
 exit
 username admin password G1ss3S
 ip ssh version 2
