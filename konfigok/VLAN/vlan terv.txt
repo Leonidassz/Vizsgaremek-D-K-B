@@ -102,10 +102,10 @@ exit
 no vlan 99
 
 int vlan 30
-ip address 192.168.1.163 255.255.255.240
+ip address 192.168.1.164 255.255.255.240
 no sh
 exit
-ip default-gateway 192.168.1.161
+ip default-gateway 192.168.1.163
 
 do wr
 
