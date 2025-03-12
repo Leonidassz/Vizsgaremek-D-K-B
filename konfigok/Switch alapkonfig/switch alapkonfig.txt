@@ -61,7 +61,18 @@ enable
 configure terminal
 no ip domain lookup
 ip domain-name gandiegyszalse.net
-enable secret G1SS2-SW2PWD
+enable secret G1SS2-SW3PWD
+service password-encryption
+
+------------------------
+G1SS2-SW4
+------------------------
+
+enable
+configure terminal
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS2-SW4PWD
 service password-encryption
 
 ------------------------

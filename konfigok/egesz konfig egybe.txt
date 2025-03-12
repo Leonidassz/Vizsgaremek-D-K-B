@@ -4,9 +4,10 @@ SITE 1
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
------------------------------------------
+----------------------------------------------------------------------------------
 G1SS1-R1 
------------------------------------------
+----------------------------------------------------------------------------------
+
 en
 conf t
 hostname G1SS1-R1
@@ -48,28 +49,81 @@ int fa0/1.10
 encapsulation dot1Q 10
 ip address 192.168.1.1 255.255.255.224
 description Dolgozok_Data
+standby 1 ip 192.168.1.3
+standby 1 priority 150
+standby 1 preempt 
 exit
 int fa0/1.30
 encapsulation dot1Q 30
 ip address 192.168.1.161 255.255.255.248
 description Management
+standby 2 ip 192.168.1.163
+standby 2 priority 150
+standby 2 preempt 
 exit
 int fa0/1.40
 encapsulation dot1Q 40
 ip address 192.168.1.33 255.255.255.224
 description VOICE
+standby 3 ip 192.168.1.35
+standby 3 priority 150
+standby 3 preempt 
 exit
 int fa0/1.50
 encapsulation dot1Q 50
 ip address 192.168.1.145 255.255.255.240
 description Wireless
+standby 4 ip 192.168.1.147
+standby 4 priority 150
+standby 4 preempt 
 exit
+
+router ospf 1
+router-id 1.1.1.1
+network 192.168.1.0 0.0.0.31 area 0
+network 192.168.1.32 0.0.0.31 area 0
+network 192.168.1.64 0.0.0.31 area 0
+network 192.168.1.96 0.0.0.15 area 0
+network 192.168.1.112 0.0.0.15 area 0
+network 192.168.1.144 0.0.0.15 area 0
+network 192.168.1.160 0.0.0.7 area 0
+network 192.168.1.168 0.0.0.3 area 0
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.4 0.0.0.3 area 0
+passive-interface fa0/0
+passive-interface fa0/1
+auto-cost reference-bandwidth 1000
+
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss1R
+ip ssh version 2
+
 
 do wr
 
------------------------------------------
+
+
+
+
+
+----------------------------------------------------------------------------------
 G1SS1-R2
------------------------------------------
+----------------------------------------------------------------------------------
 en 
 conf t
 hostname G1SS1-R2
@@ -81,16 +135,49 @@ ip address 10.0.0.9 255.255.255.252
 no sh
 
 int fa0/0
-ip address 192.168.1.129 255.255.255.240
-description Management
 no sh
 exit
+int fa0/0.30
+encapsulation dot1Q 30
+ip address 192.168.1.129 255.255.255.240
+description Management
+exit
+
+router ospf 1
+router-id 2.2.2.2
+network 192.168.1.128 0.0.0.15 area 0
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+passive-interface fa0/0
+auto-cost reference-bandwidth 1000
+
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss1R
+ip ssh version 2
+
 
 do wr
 
--------------------------------------------
+
+
+--------------------------------------------------------------------------------------
 G1SS1-R3
--------------------------------------------
+--------------------------------------------------------------------------------------
 en
 conf t
 hostname G1SS1-R3
@@ -111,28 +198,76 @@ int fa0/0.10
 encapsulation dot1Q 10
 ip address 192.168.1.2 255.255.255.224
 description Dolgozok_Data
+standby 1 ip 192.168.1.3
+standby 1 priority 100 
 exit
 int fa0/0.30
 encapsulation dot1Q 30
 ip address 192.168.1.162 255.255.255.248
 description Management
+standby 2 ip 192.168.1.163
+standby 2 priority 100 
 exit
 int fa0/0.40
 encapsulation dot1Q 40
 ip address 192.168.1.34 255.255.255.224
 description VOICE
+standby 3 ip 192.168.1.35
+standby 3 priority 100 
 exit
 int fa0/0.50
 encapsulation dot1Q 50
 ip address 192.168.1.146 255.255.255.240
 description Wireless
+standby 4 ip 192.168.1.147
+standby 4 priority 100 
 exit
 
+
+ip route 0.0.0.0 0.0.0.0 22.22.22.2
+router ospf 1
+router-id 3.3.3.3
+network 192.168.1.0 0.0.0.31 area 0
+network 192.168.1.160 0.0.0.7 area 0
+network 192.168.1.32 0.0.0.31 area 0
+network 192.168.1.144 0.0.0.15 area 0
+network 10.0.0.4 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+passive-interface fa0/0
+passive-interface g0/0/0
+default-information originate
+auto-cost reference-bandwidth 1000
+
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS1auth
+exit
+
+int range g0/0/0,g0/1/0,fa0/0
+ip nat inside
+exit
+int g0/2/0
+ip nat outside
+
+ip nat inside source static tcp 192.168.1.132 80 22.22.22.1 80
+ip nat inside source static tcp 192.168.1.132 80 22.22.22.1 8080
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss1R
+ip ssh version 2
+
+
 do wr
-
---------------------------------------------
-
-
 
 
 
@@ -147,9 +282,9 @@ SITE 2
 
 
 
------------------------------------------
+-------------------------------------------------------------------------------------
 G1SS2-R1 
------------------------------------------
+-------------------------------------------------------------------------------------
 en
 conf t
 hostname G1SS2-R1
@@ -168,11 +303,42 @@ description Management
 no sh
 exit
 
+ip route 0.0.0.0 0.0.0.0 22.22.22.6
+router ospf 1
+router-id 1.1.1.1
+default-information originate
+network 11.0.0.0 0.0.0.3 area 0
+network 11.0.0.4 0.0.0.3 area 0
+network 192.168.2.160 0.0.0.3 area 0
+passive-interface fa0/0
+passive-interface g0/2/0
+auto-cost reference-bandwidth 1000
+
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss2R
+ip ssh version 2
+
+
 do wr
 
------------------------------------------
+----------------------------------------------------------------------------------
 G1SS2-R2
------------------------------------------
+----------------------------------------------------------------------------------
 en 
 conf t
 hostname G1SS2-R2
@@ -231,7 +397,7 @@ exit
 int fa0/1.80
 encapsulation dot1Q 80
 ip address 192.168.2.97 255.255.255.224
-description Teszt_helység
+description Teszt_helyiség
 exit
 
 int fa0/1.70
@@ -240,11 +406,45 @@ ip address 192.168.2.145 255.255.255.240
 description wireless
 exit
 
+
+router ospf 1
+router-id 2.2.2.2
+network 192.168.2.0 0.0.0.31 area 0
+network 192.168.2.32 0.0.0.31 area 0
+network 192.168.2.64 0.0.0.31 area 0
+network 192.168.2.96 0.0.0.31 area 0
+network 192.168.2.128 0.0.0.15 area 0
+network 192.168.2.144 0.0.0.15 area 0
+network 11.0.0.0 0.0.0.3 area 0
+network 11.0.0.8 0.0.0.3 area 0
+passive-interface fa0/1
+passive-interface fa0/0
+auto-cost reference-bandwidth 1000
+
+int g0/1/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss2R
+ip ssh version 2
+
 do wr
 
--------------------------------------------
+------------------------------------------------------------------------------------
 G1SS2-R3
--------------------------------------------
+------------------------------------------------------------------------------------
 en
 conf t
 hostname G1SS2-R3
@@ -266,8 +466,8 @@ encapsulation dot1Q 10
 ip address 192.168.2.3 255.255.255.224
 description Dolgozok_Data
 standby 1 ip 192.168.2.1
-standby 1 priority 150
-standby 1 preempt
+standby 1 priority 100
+
 exit
 
 int fa0/0.30
@@ -275,8 +475,8 @@ encapsulation dot1Q 30
 ip address 192.168.2.131 255.255.255.240
 description Management
 standby 2 ip 192.168.2.129
-standby 2 priority 150
-standby 2 preempt
+standby 2 priority 100
+
 exit
 
 int fa0/0.40
@@ -284,8 +484,7 @@ encapsulation dot1Q 40
 ip address 192.168.2.35 255.255.255.224
 description VOICE
 standby 3 ip 192.168.2.33
-standby 3 priority 150
-standby 3 preempt
+standby 3 priority 100
 exit
 
 int fa0/0.50
@@ -293,13 +492,42 @@ encapsulation dot1Q 50
 ip address 192.168.2.67 255.255.255.224
 description Wireless
 standby 4 ip 192.168.2.65
-standby 4 priority 150
-standby 4 preempt
+standby 4 priority 100
 exit
+
+router ospf 1
+router-id 3.3.3.3
+network 192.168.2.0 0.0.0.31 area 0
+network 192.168.2.32 0.0.0.31 area 0
+network 192.168.2.64 0.0.0.31 area 0
+network 192.168.2.128 0.0.0.15 area 0
+network 11.0.0.4 0.0.0.3 area 0
+network 11.0.0.8 0.0.0.3 area 0
+passive-interface fa0/0
+auto-cost reference-bandwidth 1000
+
+int g0/0/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+int g0/2/0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 G1SS2auth
+exit
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss2R
+ip ssh version 2
 
 do wr
 
---------------------------------------------
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -307,9 +535,9 @@ SITE 3
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
------------------------------------------
+----------------------------------------------------------------------------------
 G1SS3-R1 
------------------------------------------
+----------------------------------------------------------------------------------
 en
 conf t
 hostname G1SS3-R1 
@@ -345,6 +573,19 @@ ip address 192.168.3.29 255.255.255.252
 description Wireless
 exit
 
+ip route 0.0.0.0 0.0.0.0 22.22.22.9
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss3R
+ip ssh version 2
+
+
 do wr
 
 
@@ -354,9 +595,9 @@ ISP-K
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-----------------------------------
+---------------------------------------------------------------------------
 ISP 1
-----------------------------------
+---------------------------------------------------------------------------
 en 
 conf t
 hostname ISP-1
@@ -376,9 +617,9 @@ no sh
 
 do wr
 
-----------------------------------
+---------------------------------------------------------------------------
 ISP 2
-----------------------------------
+---------------------------------------------------------------------------
 en 
 conf t
 hostname ISP-2
@@ -394,9 +635,9 @@ no sh
 
 do wr
 
-----------------------------------
+---------------------------------------------------------------------------
 ISP 3
-----------------------------------
+--------------------------------------------------------------------
 en 
 conf t
 hostname ISP-3
@@ -412,7 +653,7 @@ no sh
 
 do wr
 
---------------------------------------
+
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -422,9 +663,9 @@ Switchek
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-------------------------
+--------------------------------------------------------------------
 G1SS1-SW1
-------------------------
+--------------------------------------------------------------------
 en
 conf t
 hostname G1SS1-SW1
@@ -474,12 +715,28 @@ no sh
 exit
 ip default-gateway 192.168.1.169
 
+
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS1-SW1PWD
+service password-encryption
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss1S
+ip ssh version 2
+
+
 do wr
 
-
-------------------------
+--------------------------------------------------------------------
 G1SS1-SW2
-------------------------
+--------------------------------------------------------------------
 
 en
 conf t
@@ -525,16 +782,33 @@ exit
 no vlan 99
 
 int vlan 30
-ip address 192.168.1.163 255.255.255.240
+ip address 192.168.1.164 255.255.255.240
 no sh
 exit
-ip default-gateway 192.168.1.161
+ip default-gateway 192.168.1.163
+
+
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS1-SW2PWD
+service password-encryption
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss1S
+ip ssh version 2
+
 
 do wr
 
-------------------------
+--------------------------------------------------------------------
 G1SS1-SW3
-------------------------
+--------------------------------------------------------------------
 
 en
 conf t
@@ -544,7 +818,7 @@ name management
 vlan 99 
 name black_hole
 exit
-int range fa0/24
+int fa0/24
 switchport mode trunk
 switchport trunk allowed vlan 30
 exit
@@ -570,13 +844,30 @@ no sh
 exit
 ip default-gateway 192.168.1.129
 
+
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS1-SW3PWD
+service password-encryption
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss1S
+ip ssh version 2
+
+
 do wr
 
 
 
-------------------------
+--------------------------------------------------------------------
 G1SS2-SW1
-------------------------
+--------------------------------------------------------------------
 
 en
 conf t
@@ -630,16 +921,51 @@ int vlan 30
 ip address 192.168.2.132 255.255.255.240
 no sh
 exit
-ip default-gateway 192.168.1.129
+ip default-gateway 192.168.2.129
+
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS2-SW1PWD
+service password-encryption
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss2S
+ip ssh version 2
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10 root primary
+spanning-tree vlan 30 root primary
+spanning-tree vlan 40 root primary
+spanning-tree vlan 50 root primary
+
+spanning-tree portfast bpduguard default
+spanning-tree portfast default 
+
+interface range fa0/23-24
+spanning-tree bpduguard enable
+
+interface fa0/20
+spanning-tree bpduguard enable
+exit
+
+interface fa0/1
+spanning-tree bpduguard enable
+exit
 
 do wr
 
 
 
 
-------------------------
+--------------------------------------------------------------------
 G1SS2-SW2
-------------------------
+--------------------------------------------------------------------
 
 en
 conf t
@@ -685,16 +1011,49 @@ int vlan 30
 ip address 192.168.2.133 255.255.255.240
 no sh
 exit
-ip default-gateway 192.168.1.129
+ip default-gateway 192.168.2.129
+
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS2-SW2PWD
+service password-encryption
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss2S
+ip ssh version 2
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10 root secondary
+spanning-tree vlan 30 root secondary
+spanning-tree vlan 40 root secondary
+spanning-tree vlan 50 root secondary
+
+
+spanning-tree portfast bpduguard default
+spanning-tree portfast default 
+
+
+interface g0/1
+spanning-tree bpduguard enable
+
+interface range fa0/1-7
+spanning-tree bpduguard enable
+exit
 
 do wr
 
 
 
 
-------------------------
+--------------------------------------------------------------------
 G1SS2-SW3
-------------------------
+--------------------------------------------------------------------
 
 en
 conf t
@@ -740,14 +1099,106 @@ int vlan 30
 ip address 192.168.2.134 255.255.255.240
 no sh
 exit
-ip default-gateway 192.168.1.129
+ip default-gateway 192.168.2.129
+
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS2-SW3PWD
+service password-encryption
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss2S
+ip ssh version 2
+
+spanning-tree mode rapid-pvst
+
+spanning-tree portfast bpduguard default
+spanning-tree portfast default 
+
+interface g0/1
+spanning-tree bpduguard enable
+
+interface range fa0/1-7
+spanning-tree bpduguard enable
+exit
 
 do wr
 
 
-------------------------
+
+--------------------------------------------------------------------
+G1SS2-SW4
+--------------------------------------------------------------------
+
+en
+conf t
+hostname G1SS2-SW4
+ip domain-name gandiegyszalse.net
+
+vlan 70
+name Teszt_Helyiség
+exit
+vlan 80
+name Wireless
+exit
+vlan 99
+name black_hole
+exit
+
+int fa0/24
+switchport mode trunk
+switchport trunk allowed vlan 70,80
+exit
+int fa0/23
+switchport mode access
+switchport access vlan 80
+exit
+int range fa0/1-3
+switchport mode access
+switchport access vlan 70
+exit
+int range fa0/4-22,g0/1-2
+switchport mode access
+switchport access vlan 99
+sh
+exit
+
+no vlan 99
+
+int vlan 70
+ip address 192.168.2.98 255.255.255.224
+no sh
+exit
+ip default-gateway 192.168.2.97
+
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS2-SW4PWD
+service password-encryption
+
+ip domain-name gandiegyszalse.net
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss2S
+ip ssh version 2
+
+
+do wr
+
+
+--------------------------------------------------------------------
 G1SS3-SW1
-------------------------
+--------------------------------------------------------------------
 en
 conf t
 hostname G1SS3-SW1
@@ -789,8 +1240,22 @@ no sh
 exit
 ip default-gateway 192.168.3.25
 
-do wr
+no ip domain lookup
+ip domain-name gandiegyszalse.net
+enable secret G1SS3-SW1PWD
+service password-encryption
 
+ip domain-name gandiegyszalse.com
+crypto key generate rsa
+1024
+line vty 0 15
+transport input ssh
+login local
+exit
+username admin password G1ss3S
+ip ssh version 2
+
+do wr
 
 
 

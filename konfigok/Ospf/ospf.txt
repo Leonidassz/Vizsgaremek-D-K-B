@@ -61,13 +61,6 @@ default-information originate
 auto-cost reference-bandwidth 1000
 -----------------------
 
------------------------
-G1SS3-R1
------------------------
-en
-conf t
-ip route 0.0.0.0 0.0.0.0 22.22.22.9
------------------------
 
 -----------------------
 G1SS2-R1
@@ -119,3 +112,13 @@ network 11.0.0.4 0.0.0.3 area 0
 network 11.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
 auto-cost reference-bandwidth 1000
+
+
+
+-----------------------
+G1SS3-R1
+-----------------------
+en
+conf t
+ip route 0.0.0.0 0.0.0.0 22.22.22.9
+-----------------------
