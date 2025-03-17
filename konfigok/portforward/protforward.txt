@@ -1,10 +1,6 @@
+------------------------
+G1SS1-R3
+------------------------
+
 ip nat inside source static tcp 192.168.1.132 80 22.22.22.1 80
 ip nat inside source static tcp 192.168.1.132 80 22.22.22.1 8080
-
-
-int range g0/0/0,g0/1/0,fa0/0
-ip nat inside
-exit
-int g0/2/0
-ip nat outside
-no ip nat inside source static tcp 192.168.1.132 80 22.22.22.1 8080
