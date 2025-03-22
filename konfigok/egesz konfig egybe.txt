@@ -247,7 +247,8 @@ ip ospf authentication message-digest
 ip ospf message-digest-key 1 md5 G1SS1auth
 exit
 
-int range g0/0/0,g0/1/0,fa0/0
+
+int range g0/0/0,g0/1/0,fa0/0,fa0/0.10,fa0/0.30,fa0/0.40,fa0/0.50
 ip nat inside
 exit
 int g0/2/0
@@ -266,17 +267,6 @@ exit
 username admin password G1ss1R
 ip ssh version 2
 
-int g0/0/0
-ip nat inside
-
-int g0/1/0
-ip nat inside
-
-int fa0/0
-ip nat inside
-
-int g0/2/0
-ip nat outside
 
 access-list 1 permit 192.168.1.0 0.0.0.31
 access-list 1 permit 192.168.1.32 0.0.0.31
@@ -301,6 +291,7 @@ permit tcp any host 22.22.22.1 eq 80
 permit tcp any host 22.22.22.1 eq 8080
 permit tcp any any established
 permit icmp any any echo-reply
+permit icmp any host 22.22.22.1 echo
 
 ip nat inside source list 1 interface g0/2/0 overload
 
@@ -399,6 +390,7 @@ access-list 1 deny any
 
 ip access-list extended tuzfal
 permit tcp any any established
+permit icmp any host 22.22.22.5 echo
 permit icmp any any echo-reply
 
 
@@ -616,7 +608,7 @@ en
 conf t
 hostname G1SS3-R1 
 int g0/0/0
-ip address 22.22.22.8 255.255.255.252
+ip address 22.22.22.10 255.255.255.252
 no sh
 
 int fa0/0
@@ -659,7 +651,7 @@ exit
 username admin password G1ss3R
 ip ssh version 2
 
-int fa0/0
+int range fa0/0,fa0/0.10,fa0/0.20,fa0/0.30,fa0/0.40
 ip nat inside
 
 int g0/0/0
@@ -675,6 +667,7 @@ access-list 1 deny any
 ip access-list extended tuzfal
 permit tcp any any established
 permit icmp any any echo-reply
+permit icmp any host 22.22.22.10 echo
 
 
 ip nat inside source list 1 interface g0/0/0 overload
@@ -711,6 +704,13 @@ int g0/0
 ip address 44.55.66.1 255.255.0.0
 no sh
 
+router bgp 65001
+bgp router-id 1.1.1.1
+neighbor 20.20.20.2 remote-as 65002
+neighbor 20.20.20.10 remote-as 65003
+network 22.22.22.0 mask 255.255.255.252
+network 20.20.20.0 mask 255.255.255.252
+network 20.20.20.8 mask 255.255.255.252
 
 do wr
 
@@ -730,6 +730,14 @@ int g0/0/0
 ip address 22.22.22.6 255.255.255.252
 no sh
 
+router bgp 65002
+bgp router-id 2.2.2.2
+neighbor 20.20.20.1 remote-as 65001
+neighbor 20.20.20.6 remote-as 65003
+network 20.20.20.0 mask 255.255.255.252
+network 20.20.20.4 mask 255.255.255.252
+network 22.22.22.4 mask 255.255.255.252
+
 do wr
 
 ---------------------------------------------------------------------------
@@ -747,6 +755,15 @@ no sh
 int g0/0/0
 ip address 22.22.22.9 255.255.255.252
 no sh
+
+router bgp 65003
+bgp router-id 3.3.3.3
+neighbor 20.20.20.9 remote-as 65001
+neighbor 20.20.20.5 remote-as 65002
+network 22.22.22.8 mask 255.255.255.252
+network 20.20.20.8 mask 255.255.255.252
+network 20.20.20.4 mask 255.255.255.252
+
 
 do wr
 
