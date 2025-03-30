@@ -1,0 +1,41 @@
+G1SS1-R1#show ephone
+
+ephone-1 Mac:0001.632B.6AEC TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.114 1060 7960   keepalive 43 max_line 2
+ button 1: dn 1  number 100 CH1   IDLE
+
+ephone-2 Mac:00D0.FF1C.963D TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.115 1137 7960   keepalive 43 max_line 2
+ button 1: dn 2  number 101 CH1   IDLE
+
+ephone-3 Mac:0001.634A.C787 TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.116 1025 7960   keepalive 43 max_line 2
+ button 1: dn 3  number 102 CH1   IDLE
+
+ephone-4 Mac:000C.CFCB.41EA TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.117 1025 7960   keepalive 43 max_line 2
+ button 1: dn 4  number 103 CH1   IDLE
+
+ephone-8 Mac:0050.0FA6.148E TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.36 1025 7960   keepalive 43 max_line 2
+ button 1: dn 8  number 200 CH1   IDLE
+
+ephone-9 Mac:0060.7062.DE71 TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.37 1025 7960   keepalive 43 max_line 2
+ button 1: dn 9  number 201 CH1   IDLE
+
+ephone-10 Mac:0000.0CC5.D481 TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.38 1025 7960   keepalive 43 max_line 2
+ button 1: dn 10  number 202 CH1   IDLE
+
+ephone-11 Mac:00E0.8F55.6CCC TCP socket:[1] activeLine:0 REGISTERED in SCCP ver 12 and Server in ver 8
+mediaActive:0 offhook:0 ringing:0 reset:0 reset_sent:0 paging 0 debug:0 caps:8
+IP:192.168.1.39 1025 7960   keepalive 43 max_line 2
+ button 1: dn 11  number 203 CH1   IDLE

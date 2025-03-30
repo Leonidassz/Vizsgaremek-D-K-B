@@ -1,0 +1,126 @@
+
+1. site
+
+7 vezetoseg
+17 dolgozok
+
+2. site 
+34 dolgozok
+
+3.site
+3 telefon
+
+
+telephony-service
+max-dn 24
+max-ephones 24
+ip source-address 192.168.1.113 port 2000
+ip source-address 192.168.1.32 port 2000
+
+
+ephone-dn 1
+number 100
+
+ephone-dn 2
+number 101
+
+ephone-dn 3
+number 102
+
+ephone-dn 4
+number 103
+
+ephone-dn 5
+number 104
+
+ephone-dn 6
+number 105
+
+ephone-dn 7
+number 106
+
+ephone-dn 8
+number 200
+
+ephone-dn 9
+number 201
+
+ephone-dn 10
+number 202
+
+ephone-dn 11
+number 203
+
+ephone-dn 12
+number 204
+
+ephone-dn 13
+number 205
+
+ephone-dn 14
+number 206
+
+ephone-dn 15
+number 207
+
+ephone-dn 16
+number 208
+
+ephone-dn 17
+number 209
+
+ephone-dn 18
+number 210
+
+ephone-dn 19
+number 211
+
+ephone-dn 20
+number 212
+
+ephone-dn 21
+number 213
+
+ephone-dn 22
+number 214
+
+ephone-dn 23
+number 215
+
+ephone-dn 24
+number 216
+
+
+ephone 1
+mac-address 0001.632B.6AEC
+button 1:1
+exit
+ephone 2
+mac-address 0001.634A.C787
+button 1:2
+exit
+ephone 3
+mac-address 00D0.FF1C.963D
+button 1:3
+exit
+ephone 4
+mac-address 000C.CFCB.41EA
+button 1:4
+exit
+
+ephone 8
+mac-address 0050.0FA6.148E
+button 1:8
+exit
+ephone 9
+mac-address 0060.7062.DE71
+button 1:9
+exit
+ephone 10
+mac-address 0000.0CC5.D481
+button 1:10
+exit
+ephone 11
+mac-address 00E0.8F55.6CCC
+button 1:11
+exit
