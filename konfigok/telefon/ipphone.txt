@@ -1,14 +1,4 @@
 
-1. site
-
-7 vezetoseg
-17 dolgozok
-
-2. site 
-34 dolgozok
-
-3.site
-3 telefon
 
 
 telephony-service
