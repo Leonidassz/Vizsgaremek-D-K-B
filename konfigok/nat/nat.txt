@@ -2,16 +2,16 @@
 G1SS1-R3
 ------------------------
 
-int g0/0/0
+int g0/2/0
 ip nat inside
 
 int g0/1/0
 ip nat inside
 
-int fa0/0
+int range fa0/0,fa0/0.10,fa0/0.30,fa0/0.40,fa0/0.50
 ip nat inside
 
-int g0/2/0
+int g0/0/0
 ip nat outside
 
 access-list 1 permit 192.168.1.0 0.0.0.31
@@ -34,13 +34,12 @@ access-list 1 deny any
 
 ip access-list extended tuzfal
 permit tcp any host 22.22.22.1 eq 80
-permit tcp any host 22.22.22.1 eq 8080
 permit tcp any any established
 permit icmp any any echo-reply
 
-ip nat inside source list 1 interface g0/2/0 overload
+ip nat inside source list 1 interface g0/0/0 overload
 
-int g0/2/0
+int g0/0/0
 ip access-group tuzfal in 
 exit
 
