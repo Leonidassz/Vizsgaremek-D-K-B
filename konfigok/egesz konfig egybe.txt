@@ -628,6 +628,11 @@ exit
 username admin password G1ss2R
 ip ssh version 2
 
+int range fa0/1.80,fa0/1.70
+ip helper-address 192.168.2.133
+int range fa0/0.10,fa0/0.30,fa0/0.40,fa0/0.50
+ip helper-address 192.168.2.133
+
 do wr
 
 ------------------------------------------------------------------------------------
@@ -713,6 +718,9 @@ exit
 username admin password G1ss2R
 ip ssh version 2
 
+int range fa0/0.10,fa0/0.30,fa0/0.40,fa0/0.50
+ip helper-address 192.168.2.133
+
 do wr
 
 
@@ -772,6 +780,9 @@ login local
 exit
 username admin password G1ss3R
 ip ssh version 2
+
+int range fa0/0.10,fa0/0.30,fa0/0.40
+ip helper-address 192.168.3.2
 
 int range fa0/0,fa0/0.10,fa0/0.20,fa0/0.30,fa0/0.40
 ip nat inside
