@@ -310,6 +310,10 @@ no sh
 int g0/0/0
 ip address 22.22.22.1 255.255.255.252
 no sh
+int fa0/1
+ipv6 address 2011::1/64
+ipv6 address FE80::1 link-local
+no sh
 
 int fa0/0
 no sh
@@ -454,6 +458,10 @@ no sh
 int fa0/0
 ip address 192.168.2.161 255.255.255.252
 description Management
+no sh
+int fa0/1
+ipv6 address 2012::1/64
+ipv6 address FE80::1 link-local
 no sh
 exit
 
@@ -739,6 +747,11 @@ conf t
 hostname G1SS3-R1 
 int g0/0/0
 ip address 22.22.22.10 255.255.255.252
+no sh
+
+int fa0/1
+ipv6 address 2013::1/64
+ipv6 address FE80::1 link-local
 no sh
 
 int fa0/0
