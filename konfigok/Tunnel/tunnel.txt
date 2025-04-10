@@ -7,15 +7,9 @@ ipv6 unicast-routing
 interface Tunnel 1
 tunnel mode ipv6ip
 ipv6 address 2001::1/126
+ipv6 address FE80::1 link-local
 tunnel source g0/0/0
 tunnel destination 22.22.22.5
-
-interface Tunnel 2
-tunnel mode ipv6ip
-ipv6 address 2002::1/126
-tunnel source g0/0/0
-tunnel destination 22.22.22.10
-exit
 
 ipv6 router rip R1RPNG
 
@@ -24,10 +18,6 @@ ipv6 rip R1RPNG enable
 
 int Tunnel 1
 ipv6 rip R1RPNG enable
-
-int Tunnel 2
-ipv6 rip R1RPNG enable
-exit
 
 ------------------------
 G1SS2-R1
@@ -38,16 +28,9 @@ ipv6 unicast-routing
 interface Tunnel 1
 tunnel mode ipv6ip
 ipv6 address 2001::2/126
+ipv6 address FE80::2 link-local
 tunnel source g0/2/0
 tunnel destination 22.22.22.1
-
-
-interface Tunnel 3
-tunnel mode ipv6ip
-ipv6 address 2003::1/126
-tunnel source g0/2/0
-tunnel destination 22.22.22.10
-exit
 
 ipv6 router rip R1RPNG
 
@@ -57,38 +40,3 @@ ipv6 rip R1RPNG enable
 int Tunnel 1
 ipv6 rip R1RPNG enable
 
-int Tunnel 3
-ipv6 rip R1RPNG enable
-exit
-
-------------------------
-G1SS3-R1
-------------------------
-
-ipv6 unicast-routing
-
-interface Tunnel 3
-tunnel mode ipv6ip
-ipv6 address 2003::2/126
-tunnel source g0/0/0
-tunnel destination 22.22.22.5
-
-
-interface Tunnel 2
-tunnel mode ipv6ip
-ipv6 address 2002::2/126
-tunnel source g0/0/0
-tunnel destination 22.22.22.1
-exit
-
-ipv6 router rip R1RPNG
-
-int fa0/1
-ipv6 rip R1RPNG enable
-
-int Tunnel 3
-ipv6 rip R1RPNG enable
-
-int Tunnel 2
-ipv6 rip R1RPNG enable
-exit

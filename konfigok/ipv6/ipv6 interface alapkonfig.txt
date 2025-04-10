@@ -16,13 +16,3 @@ int fa0/1
 ipv6 address 2012::1/64
 ipv6 address FE80::1 link-local
 no sh
-
-
-------------------------
-G1SS3-R1
-------------------------
-
-int fa0/1
-ipv6 address 2013::1/64
-ipv6 address FE80::1 link-local
-no sh
