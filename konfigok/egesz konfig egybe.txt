@@ -200,36 +200,36 @@ number 216
 
 
 ephone 1
-mac-address 0001.632B.6AEC
+mac-address 0001.4363.A876
 button 1:1
 exit
 ephone 2
-mac-address 0001.634A.C787
+mac-address 0040.0B11.470C
 button 1:2
 exit
 ephone 3
-mac-address 00D0.FF1C.963D
+mac-address 0090.217D.95E0
 button 1:3
 exit
 ephone 4
-mac-address 000C.CFCB.41EA
+mac-address 0040.0BD6.2E99
 button 1:4
 exit
 
 ephone 8
-mac-address 0050.0FA6.148E
+mac-address 0060.2F39.21E2
 button 1:8
 exit
 ephone 9
-mac-address 0060.7062.DE71
+mac-address 00A1.B2C3.D4E5
 button 1:9
 exit
 ephone 10
-mac-address 0000.0CC5.D481
+mac-address 0001.969D.0BD7
 button 1:10
 exit
 ephone 11
-mac-address 00E0.8F55.6CCC
+mac-address 0007.EC17.8259
 button 1:11
 exit
 
@@ -849,6 +849,16 @@ no sh
 int g0/0
 ip address 44.55.66.1 255.255.0.0
 no sh
+
+int g0/1
+ip address 70.80.90.1 255.255.255.0
+no sh
+exit
+ip dhcp excluded-address 70.80.90.1
+ip dhcp pool MODEM
+network 70.80.90.0 255.255.255.0
+default-router 70.80.90.1
+exit
 
 router bgp 65001
 bgp router-id 1.1.1.1
