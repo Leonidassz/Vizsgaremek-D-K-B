@@ -1,0 +1,100 @@
+int g0/1
+ip address 70.80.90.1 255.255.255.0
+no sh
+exit
+ip dhcp excluded-address 70.80.90.1
+ip dhcp pool MODEM
+network 70.80.90.0 255.255.255.0
+default-router 70.80.90.1
+exit
+
+
+
+
+G1SS2-SW1(config)#interface FastEthernet0/22
+G1SS2-SW1(config-if)#shutdown
+
+G1SS2-SW1#ping 192.168.2.133
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.2.133, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/0 ms
+
+
+
+G1SS1-SW1#show running-config | include default-gateway
+ip default-gateway 192.168.1.169
+G1SS1-SW1#show ip interface brief | include Vlan30
+Vlan30                 192.168.1.170   YES manual up                    up
+G1SS1-SW1#
+
+
+
+G1SS1-R1#show standby
+FastEthernet0/1.10 - Group 1
+  State is Active
+  Virtual IP address is 192.168.1.3
+  Preemption enabled
+  Active router is local
+  Standby router is 192.168.1.2
+  Priority 150 (configured 150)
+FastEthernet0/1.30 - Group 2
+  State is Active
+  Virtual IP address is 192.168.1.163
+  Preemption enabled
+  Active router is local
+  Standby router is 192.168.1.162
+  Priority 150 (configured 150)
+FastEthernet0/1.40 - Group 3
+  State is Active
+  Virtual IP address is 192.168.1.35
+  Preemption enabled
+  Active router is local
+  Standby router is 192.168.1.34
+  Priority 150 (configured 150)
+FastEthernet0/1.50 - Group 4
+  State is Active
+  Virtual IP address is 192.168.1.147
+  Preemption enabled
+  Active router is local
+  Standby router is 192.168.1.146
+  Priority 150 (configured 150)
+G1SS1-R1#
+
+
+FastEthernet0/0.10 - Group 1
+  State is Standby
+  Virtual IP address is 192.168.1.3
+  Preemption disabled
+  Active router is 192.168.1.1
+  Priority 100 (default 100)
+FastEthernet0/0.30 - Group 2
+  State is Standby
+  Virtual IP address is 192.168.1.163
+  Preemption disabled
+  Active router is 192.168.1.161
+  Priority 100 (default 100)
+FastEthernet0/0.40 - Group 3
+  State is Standby
+  Virtual IP address is 192.168.1.35
+  Preemption disabled
+  Active router is 192.168.1.33
+  Priority 100 (default 100)
+FastEthernet0/0.50 - Group 4
+  State is Standby
+  Virtual IP address is 192.168.1.147
+  Preemption disabled
+  Active router is 192.168.1.145, priority 150
+  Priority 100 (default 100)
+
+ISP-1#show ip bgp summary
+BGP router identifier 1.1.1.1, local AS number 65001
+
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+20.20.20.2      4 65002      72      63        14    0    0 01:01:34        4
+20.20.20.10     4 65003      72      62        14    0    0 01:00:41        4
+
+ISP-1#
+
+
