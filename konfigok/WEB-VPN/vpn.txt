@@ -29,7 +29,13 @@ G1SS1-SW1#show ip interface brief | include Vlan30
 Vlan30                 192.168.1.170   YES manual up                    up
 G1SS1-SW1#
 
-
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    
+10   Dolgozok_Data                    active    
+30   management                       active    Fa0/1, Fa0/20
+40   VOICE                            active    
+50   wireless                         active    
 
 G1SS1-R1#show standby
 FastEthernet0/1.10 - Group 1
