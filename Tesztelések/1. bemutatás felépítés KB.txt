@@ -1,0 +1,22 @@
+vlan
+	vlan létrehozás	
+	vtp
+	intervlan routing
+L2
+	ether channel
+	port sec
+	stp
+L3
+	OSPF
+	OSPF auth
+	NAT
+	portforward
+	tűzfalak
+	tunnel
+	webvpn
+	hsrp
+Internet szimulálása
+	BGP
+IP telefonok
+Szerverek
+	KOLOOOOOOOOOOOOOOOS halooooooooooooooooooooooo
