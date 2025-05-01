@@ -34,6 +34,7 @@ access-list 1 deny any
 
 ip access-list extended tuzfal
 permit tcp any host 22.22.22.1 eq 80
+permit tcp any host 22.22.22.1 eq 443
 permit tcp any any established
 permit icmp any any echo-reply
 permit ip host 22.22.22.5 host 22.22.22.1
