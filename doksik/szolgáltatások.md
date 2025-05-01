@@ -52,3 +52,6 @@ A rendszergazda külön feladata lesz, hogy figyelje, illetve hetente ellenőriz
 **Mail**
 
 Mivel a vásárlók elektronikusan is felvehetik a céggel és a cég non-stop technikai segélyt nyújt, ezért fontos, hogy a nap bármely pillanatában működjön a szolgáltatás, hogy ne legyenek nagy csúszások. Illetve, ha bármi hiba is előfordulna, akkor az e-mail küldési ideje alapján vissza lehet követni a hiba fellépésének időpontját.
+
+
+
