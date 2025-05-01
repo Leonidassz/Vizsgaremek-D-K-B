@@ -258,10 +258,32 @@ no sh
 int fa0/0
 no sh
 exit
+
+int fa0/0.10
+encapsulation dot1Q 10
+ip address 192.168.1.65 255.255.255.240
+description Dolgozok_Wireless
+ip helper-address 192.168.1.131
+exit
+
+int fa0/0.20
+encapsulation dot1Q 20
+ip address 192.168.1.81 255.255.255.240
+description Vezetoseg_Wireless
+ip helper-address 192.168.1.131
+exit
+
 int fa0/0.30
-encapsulation dot1Q 30
+encapsulation dot1Q 30 native
 ip address 192.168.1.129 255.255.255.240
 description Management
+exit
+
+int fa0/0.40
+encapsulation dot1Q 40
+ip address 192.168.1.145 255.255.255.240
+description Management
+ip helper-address 192.168.1.131
 exit
 
 router ospf 1
@@ -1177,21 +1199,34 @@ G1SS1-SW3
 
 en
 conf t
+
 hostname G1SS1-SW3
+vlan 10
+name Dolgozok_Wireless
+vlan 30
+name Vezetoseg_Wireless
 vlan 30
 name management
+vlan 40 
+name Guest_Wireless
 vlan 99 
 name black_hole
 exit
-int fa0/24
+
+int range fa0/20-24, fa0/3
+no sh
 switchport mode trunk
-switchport trunk allowed vlan 30
+switchport trunk native vlan 30
+switchport trunk allowed vlan 10,20,30,40
 exit
-int range fa0/1-4
+
+int range fa0/1-2,fa0/4
+no sh
 switchport mode access
 switchport access vlan 30
 exit
-int range fa0/5-23
+
+int range fa0/5-19
 switchport mode access
 switchport access vlan 99
 sh
