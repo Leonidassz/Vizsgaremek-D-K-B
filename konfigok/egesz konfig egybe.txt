@@ -432,6 +432,7 @@ permit tcp any host 22.22.22.1 eq 443
 permit tcp any any established
 permit icmp any any echo-reply
 permit icmp any host 22.22.22.1 echo
+permit ip host 22.22.22.5 host 22.22.22.1
 
 ip nat inside source list 1 interface g0/0/0 overload
 
@@ -561,6 +562,8 @@ ip access-list extended tuzfal
 permit tcp any any established
 permit icmp any any echo-reply
 permit icmp any host 22.22.22.5 echo
+permit ip host 22.22.22.1 host 22.22.22.5
+
 
 ip nat inside source list 1 interface g0/2/0 overload
 
