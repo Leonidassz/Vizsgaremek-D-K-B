@@ -185,36 +185,36 @@ number 216
 
 
 ephone 1
-mac-address 0001.4363.A876
+mac-address 0002.4A64.01B1
 button 1:1
 exit
 ephone 2
-mac-address 0040.0B11.470C
+mac-address 0001.634C.2212
 button 1:2
 exit
 ephone 3
-mac-address 0090.217D.95E0
+mac-address 0004.9A29.9191
 button 1:3
 exit
 ephone 4
-mac-address 0040.0BD6.2E99
+mac-address 0002.16B8.71CC
 button 1:4
 exit
 
 ephone 8
-mac-address 0060.2F39.21E2
+mac-address 0003.E427.678E
 button 1:8
 exit
 ephone 9
-mac-address 00A1.B2C3.D4E5
+mac-address 00E0.8FD7.51C4
 button 1:9
 exit
 ephone 10
-mac-address 0001.969D.0BD7
+mac-address 0001.C998.DA94
 button 1:10
 exit
 ephone 11
-mac-address 0007.EC17.8259
+mac-address 0090.2B6B.07CC
 button 1:11
 exit
 

@@ -8,6 +8,7 @@ permit udp host 192.168.1.131 eq 67 192.168.1.144 0.0.0.15 eq 68
 deny ip 192.168.1.144 0.0.0.15 host 192.168.1.132
 deny ip 192.168.1.144 0.0.0.15 host 192.168.1.131
 permit ip 192.168.1.144 0.0.0.15 any
+permit ip any any
 
 interface fa0/0.30
 ip access-group GUEST out
