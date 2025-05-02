@@ -36,11 +36,6 @@ encapsulation dot1Q 40
 ip address 192.168.1.113 255.255.255.240
 description VOICE
 exit
-int fa0/0.50
-encapsulation dot1Q 50
-ip address 192.168.1.65 255.255.255.224
-description Wireless
-exit
 
 int fa0/1
 no sh
@@ -69,23 +64,13 @@ standby 3 ip 192.168.1.35
 standby 3 priority 150
 standby 3 preempt 
 exit
-int fa0/1.50
-encapsulation dot1Q 50
-ip address 192.168.1.145 255.255.255.240
-description Wireless
-standby 4 ip 192.168.1.147
-standby 4 priority 150
-standby 4 preempt 
-exit
 
 router ospf 1
 router-id 1.1.1.1
 network 192.168.1.0 0.0.0.31 area 0
 network 192.168.1.32 0.0.0.31 area 0
-network 192.168.1.64 0.0.0.31 area 0
 network 192.168.1.96 0.0.0.15 area 0
-network 192.168.1.112 0.0.0.15 area 0
-network 192.168.1.144 0.0.0.15 area 0
+network 192.168.1.112 0.0.0.15 area 
 network 192.168.1.160 0.0.0.7 area 0
 network 192.168.1.168 0.0.0.3 area 0
 network 10.0.0.0 0.0.0.3 area 0
@@ -114,9 +99,9 @@ exit
 username admin password G1ss1R
 ip ssh version 2
 
-int range fa0/0.20,fa0/0.30,fa0/0.40,fa0/0.50
+int range fa0/0.20,fa0/0.30,fa0/0.40
 ip helper-address 192.168.1.131
-int range fa0/1.10,fa0/1.30,fa0/1.40,fa0/1.50
+int range fa0/1.10,fa0/1.30,fa0/1.40
 ip helper-address 192.168.1.131
 
 telephony-service
@@ -288,7 +273,10 @@ exit
 
 router ospf 1
 router-id 2.2.2.2
+network 192.168.1.64 0.0.0.15 area 0
+network 192.168.1.80 0.0.0.15 area 0
 network 192.168.1.128 0.0.0.15 area 0
+network 192.168.1.144 0.0.0.15 area 0
 network 10.0.0.0 0.0.0.3 area 0
 network 10.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
@@ -312,6 +300,16 @@ login local
 exit
 username admin password G1ss1R
 ip ssh version 2
+
+ip access-list extended GUEST
+permit udp 192.168.1.144 0.0.0.15 host 192.168.1.131 eq 67
+permit udp host 192.168.1.131 eq 67 192.168.1.144 0.0.0.15 eq 68
+deny ip 192.168.1.144 0.0.0.15 host 192.168.1.132
+deny ip 192.168.1.144 0.0.0.15 host 192.168.1.131
+permit ip 192.168.1.144 0.0.0.15 any
+
+interface fa0/0.30
+ip access-group GUEST out
 
 logging 192.168.1.132
 
@@ -363,13 +361,7 @@ description VOICE
 standby 3 ip 192.168.1.35
 standby 3 priority 100 
 exit
-int fa0/0.50
-encapsulation dot1Q 50
-ip address 192.168.1.146 255.255.255.240
-description Wireless
-standby 4 ip 192.168.1.147
-standby 4 priority 100 
-exit
+
 
 int range fa0/0.10,fa0/0.30,fa0/0.40,fa0/0.50
 ip helper-address 192.168.1.131
@@ -380,7 +372,6 @@ router-id 3.3.3.3
 network 192.168.1.0 0.0.0.31 area 0
 network 192.168.1.160 0.0.0.7 area 0
 network 192.168.1.32 0.0.0.31 area 0
-network 192.168.1.144 0.0.0.15 area 0
 network 10.0.0.4 0.0.0.3 area 0
 network 10.0.0.8 0.0.0.3 area 0
 passive-interface fa0/0
@@ -407,7 +398,7 @@ exit
 username admin password G1ss1R
 ip ssh version 2
 
-int range g0/2/0,g0/1/0,fa0/0,fa0/0.10,fa0/0.30,fa0/0.40,fa0/0.50
+int range g0/2/0,g0/1/0,fa0/0,fa0/0.10,fa0/0.30,fa0/0.40
 ip nat inside
 exit
 int g0/0/0
@@ -421,7 +412,8 @@ access-list 1 permit 192.168.1.32 0.0.0.31
 access-list 1 permit 192.168.1.144 0.0.0.15
 access-list 1 permit 192.168.1.160 0.0.0.7
 
-access-list 1 permit 192.168.1.64 0.0.0.31
+access-list 1 permit 192.168.1.64 0.0.0.15
+access-list 1 permit 192.168.1.80 0.0.0.15
 access-list 1 permit 192.168.1.96 0.0.0.15 
 access-list 1 permit 192.168.1.112 0.0.0.15 
 access-list 1 permit 192.168.1.168 0.0.0.7
@@ -1022,14 +1014,12 @@ vlan 30
 name management
 vlan 40
 name VOICE
-vlan 50
-name wireless
 vlan 99 
 name black_hole
 exit
 int fa0/24
 switchport mode trunk
-switchport trunk allowed vlan 20,30,40,50
+switchport trunk allowed vlan 20,30,40
 exit
 int range fa0/1-4
 switchport mode access
@@ -1040,11 +1030,7 @@ int fa0/5
 switchport mode access
 switchport access vlan 20
 exit
-int fa0/23
-switchport mode access
-switchport access vlan 50
-exit
-int range fa0/6-22
+int range fa0/6-23
 switchport mode access
 switchport access vlan 99
 sh
@@ -1114,14 +1100,12 @@ vlan 30
 name management
 vlan 40
 name VOICE
-vlan 50
-name wireless
 vlan 99 
 name black_hole
 exit
 int range fa0/23-24
 switchport mode trunk
-switchport trunk allowed vlan 10,30,40,50
+switchport trunk allowed vlan 10,30,40
 exit
 int range fa0/1-4
 switchport mode access
@@ -1132,11 +1116,7 @@ int range fa0/21-22
 switchport mode access
 switchport access vlan 10
 exit
-int fa0/20
-switchport mode access
-switchport access vlan 50
-exit
-int range fa0/5-19
+int range fa0/5-20
 switchport mode access
 switchport access vlan 99
 sh
