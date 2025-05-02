@@ -9,8 +9,8 @@ deny ip 192.168.1.144 0.0.0.15 host 192.168.1.132
 deny ip 192.168.1.144 0.0.0.15 host 192.168.1.131
 permit ip 192.168.1.144 0.0.0.15 any
 
-interface fa0/0
- ip access-group GUEST_FILTER in
+interface fa0/0.30
+ip access-group GUEST out
 
 ------------------------
 G1SS1-R3
